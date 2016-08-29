@@ -15,6 +15,10 @@ public class ZkKvService extends AbstractKvService implements KvService {
     private String zkAddress = "localhost:2181";
     private ZookeeperDelegate zookeeperDelegate;
 
+    public ZkKvService(String zkAddress) {
+        this.zkAddress = zkAddress;
+    }
+
     public void init() {
         client = CuratorFrameworkFactory.newClient(
                 zkAddress, 60 * 1000, 30 * 1000, new RetryNTimes(3, 1000));

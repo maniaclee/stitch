@@ -12,7 +12,7 @@ public class ZkKvServiceTest {
 
     @Before
     public void init() {
-        zkKvService = new ZkKvService();
+        zkKvService = new ZkKvService("localhost:2181");
         zkKvService.init();
     }
 
