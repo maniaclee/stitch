@@ -8,14 +8,11 @@ import org.apache.zookeeper.data.Stat;
  * Created by lipeng on 16/8/29.
  */
 
-public class ZookeeperOperation {
+public class ZookeeperDelegate {
 
     private CuratorFramework curatorClient;
 
-    public ZookeeperOperation() {
-    }
-
-    public void setCuratorClient(CuratorFramework curatorClient) {
+    public ZookeeperDelegate(CuratorFramework curatorClient) {
         this.curatorClient = curatorClient;
     }
 
