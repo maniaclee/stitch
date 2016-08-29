@@ -1,4 +1,4 @@
-package com.lvbby.stitch.zk;
+package com.lvbby.stitch.util;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.KeeperException.NoNodeException;

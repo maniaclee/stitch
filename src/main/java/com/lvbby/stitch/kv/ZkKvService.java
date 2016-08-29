@@ -1,7 +1,8 @@
-package com.lvbby.stitch.zk;
+package com.lvbby.stitch.kv;
 
 import com.lvbby.stitch.AbstractKvService;
 import com.lvbby.stitch.api.KvService;
+import com.lvbby.stitch.util.ZookeeperDelegate;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.RetryNTimes;

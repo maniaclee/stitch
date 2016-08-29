@@ -1,4 +1,4 @@
-package com.lvbby.stitch.zk;
+package com.lvbby.stitch.kv;
 
 import org.junit.Before;
 import org.junit.Test;
