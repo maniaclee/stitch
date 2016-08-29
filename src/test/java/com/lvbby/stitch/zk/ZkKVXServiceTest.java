@@ -6,19 +6,19 @@ import org.junit.Test;
 /**
  * Created by peng on 16/8/29.
  */
-public class ZkKVServiceTest {
+public class ZkKVXServiceTest {
 
-    private ZkKVService zkKVService;
+    private ZkKVXService zkKVXService;
 
     @Before
     public void init() {
-        zkKVService = new ZkKVService();
-        zkKVService.init();
+        zkKVXService = new ZkKVXService();
+        zkKVXService.init();
     }
 
     @Test
     public void get() throws Exception {
-        System.out.println(zkKVService.get("/test/testkey"));
+        System.out.println(zkKVXService.get("/test/testkey"));
     }
 
 }

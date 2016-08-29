@@ -1,4 +1,4 @@
-package com.lvbby.stitch;
+package com.lvbby.stitch.api;
 
 /**
  * Created by lipeng on 16/8/29.

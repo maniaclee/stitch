@@ -1,9 +1,9 @@
-package com.lvbby.stitch;
+package com.lvbby.stitch.api;
 
 /**
  * Created by peng on 16/8/29.
  */
-public interface Kver extends ListenerSupport {
+public interface KvService extends ListenerSupport {
 
     void init();
 
