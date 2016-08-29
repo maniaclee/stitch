@@ -9,7 +9,7 @@ import org.apache.curator.retry.RetryNTimes;
 /**
  * Created by lipeng on 16/8/29.
  */
-public class ZkKVXService extends AbstractKvService implements KvService {
+public class ZkKvService extends AbstractKvService implements KvService {
     private CuratorFramework client;
     private String zkAddress = "localhost:2181";
     private ZookeeperDelegate zookeeperDelegate;
