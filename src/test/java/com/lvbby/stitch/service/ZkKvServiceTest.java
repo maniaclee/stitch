@@ -1,5 +1,6 @@
-package com.lvbby.stitch.kv;
+package com.lvbby.stitch.service;
 
+import com.lvbby.stitch.kv.impl.ZkKvService;
 import org.junit.Before;
 import org.junit.Test;
 

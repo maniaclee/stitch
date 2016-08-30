@@ -1,6 +1,6 @@
 package com.lvbby.stitch.api;
 
-import com.lvbby.stitch.KvServiceCache;
+import com.lvbby.stitch.kv.KvServiceCache;
 
 import java.util.Optional;
 

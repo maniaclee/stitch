@@ -1,5 +1,7 @@
 package com.lvbby.stitch.api;
 
+import com.lvbby.stitch.kv.KeyDecorator;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -9,6 +11,7 @@ import java.util.List;
  * Created by lipeng on 16/8/30.
  */
 public class StitchClientProxy {
+
 
     public StitchClient proxy(List<KeyDecorator> keyDecorators, StitchClient stitchClient) {
         return (StitchClient) Proxy.newProxyInstance(StitchClientProxy.class.getClassLoader(), new Class[]{StitchClient.class}, new InvocationHandler() {

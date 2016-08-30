@@ -1,9 +1,8 @@
-package com.lvbby.stitch.kv;
+package com.lvbby.stitch.kv.impl;
 
-import com.lvbby.stitch.AbstractKvService;
-import com.lvbby.stitch.api.EventListener;
-import com.lvbby.stitch.api.KvEvent;
-import com.lvbby.stitch.api.KvService;
+import com.lvbby.stitch.kv.EventListener;
+import com.lvbby.stitch.kv.KvEvent;
+import com.lvbby.stitch.kv.KvService;
 import com.lvbby.stitch.util.ZookeeperDelegate;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;

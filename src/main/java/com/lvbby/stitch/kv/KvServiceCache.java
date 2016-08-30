@@ -1,7 +1,7 @@
-package com.lvbby.stitch;
+package com.lvbby.stitch.kv;
 
-import com.lvbby.stitch.api.EventListener;
-import com.lvbby.stitch.api.KvService;
+import com.lvbby.stitch.kv.EventListener;
+import com.lvbby.stitch.kv.KvService;
 
 import java.util.concurrent.ConcurrentHashMap;
 
