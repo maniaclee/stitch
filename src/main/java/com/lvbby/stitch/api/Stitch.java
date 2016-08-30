@@ -10,6 +10,7 @@ import java.util.Optional;
 
 /**
  * Created by peng on 16/8/29.
+ * the api for manipulate kv
  */
 public class Stitch {
 

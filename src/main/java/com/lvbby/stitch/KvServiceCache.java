@@ -20,6 +20,8 @@ public class KvServiceCache implements KvService {
     @Override
     public void init() {
         kvService.init();
+        /** when update/delete event received , update the cache*/
+        kvService.addListener(event -> cache.put(event.getKey(), event.getValue()));
     }
 
     @Override
