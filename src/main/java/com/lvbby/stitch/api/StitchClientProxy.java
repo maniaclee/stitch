@@ -22,6 +22,9 @@ import java.util.List;
 public class StitchClientProxy {
 
 
+    /***
+     * create StitchClient proxy
+     */
     public static StitchClient proxy(List<KeyDecorator> keyDecorators, StitchClient stitchClient) {
         return (StitchClient) Proxy.newProxyInstance(StitchClientProxy.class.getClassLoader(), new Class[]{StitchClient.class}, new InvocationHandler() {
             @Override
@@ -77,18 +80,6 @@ public class StitchClientProxy {
         return decorators;
     }
 
-    @Test
-    public void cookie() {
-        StitchClient proxy = create("stitch", "app");
 
-        while (true) {
-            System.out.println(proxy.get("testkey"));
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 }
