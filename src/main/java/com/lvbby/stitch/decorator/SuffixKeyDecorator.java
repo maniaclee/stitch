@@ -6,15 +6,15 @@ import com.lvbby.stitch.util.PathUtil;
 /**
  * Created by lipeng on 16/8/31.
  */
-public class DefaultKeyDecorator implements KeyDecorator {
-    private final String prefix;
+public class SuffixKeyDecorator implements KeyDecorator {
+    private final String suffix;
 
-    public DefaultKeyDecorator(String prefix) {
-        this.prefix = prefix;
+    public SuffixKeyDecorator(String suffix) {
+        this.suffix = suffix;
     }
 
     @Override
     public String decorateKey(String key) {
-        return PathUtil.formatKey(key);
+        return PathUtil.concatKey(key,suffix);
     }
 }

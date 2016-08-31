@@ -17,6 +17,6 @@ public class EnvDecorator implements KeyDecorator {
 
     @Override
     public String decorateKey(String key) {
-        return PathUtil.keyAndKey(key, env.getEnv());
+        return PathUtil.concatKey(key, env.getEnv());
     }
 }

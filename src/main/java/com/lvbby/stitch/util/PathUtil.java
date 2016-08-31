@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  * Created by lipeng on 16/8/30.
  */
 public class PathUtil {
-    public static String keyAndKey(String... keyExtra) {
+    public static String concatKey(String... keyExtra) {
         if (keyExtra != null && keyExtra.length > 0) {
             return Arrays.stream(keyExtra).map(PathUtil::formatKey).collect(Collectors.joining("."));
         }

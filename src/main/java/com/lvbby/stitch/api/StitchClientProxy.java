@@ -6,9 +6,9 @@ import com.lvbby.stitch.decorator.PathDecorator;
 import com.lvbby.stitch.env.Env;
 import com.lvbby.stitch.env.PropertiesEnvironment;
 import com.lvbby.stitch.kv.KeyDecorator;
+import com.lvbby.stitch.kv.KvService;
 import com.lvbby.stitch.kv.KvServiceCache;
 import com.lvbby.stitch.kv.impl.ZkKvService;
-import org.junit.Test;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -61,9 +61,9 @@ public class StitchClientProxy {
     public static StitchClient create(List<KeyDecorator> decorators) {
         Env env = new PropertiesEnvironment("/data/config/env.properties");
 
-        ZkKvService zk = new ZkKvService(env.getZkServer());
-        KvServiceCache kvServiceCache = new KvServiceCache(zk);
-        DefaultStitchClient defaultStitchClient = new DefaultStitchClient(kvServiceCache);
+        KvService zk = new ZkKvService(env.getZkServer());
+        KvService kvServiceCache = new KvServiceCache(zk);
+        StitchClient defaultStitchClient = new DefaultStitchClient(kvServiceCache);
         return proxy(decorators, defaultStitchClient);
     }
 
