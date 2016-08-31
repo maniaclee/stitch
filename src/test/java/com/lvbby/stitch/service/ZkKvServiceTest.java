@@ -19,7 +19,7 @@ public class ZkKvServiceTest {
 
     @Test
     public void get() throws Exception {
-        System.out.println(zkKvService.get("/test/testkey"));
+        System.out.println(zkKvService.get("/stitch/testkey"));
     }
 
 }

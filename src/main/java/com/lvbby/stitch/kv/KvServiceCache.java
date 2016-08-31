@@ -1,8 +1,5 @@
 package com.lvbby.stitch.kv;
 
-import com.lvbby.stitch.kv.EventListener;
-import com.lvbby.stitch.kv.KvService;
-
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -26,10 +23,12 @@ public class KvServiceCache implements KvService {
 
     @Override
     public String get(String key) {
+        System.out.println(key);
         String s = cache.get(key);
         if (s == null) {
             s = kvService.get(key);
-            cache.put(key, s);
+            if (s != null)
+                cache.put(key, s);
         }
         return s;
     }

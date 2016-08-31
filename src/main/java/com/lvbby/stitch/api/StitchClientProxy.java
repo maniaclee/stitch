@@ -2,16 +2,18 @@ package com.lvbby.stitch.api;
 
 import com.google.common.collect.Lists;
 import com.lvbby.stitch.decorator.EnvDecorator;
-import com.lvbby.stitch.decorator.RootDecorator;
+import com.lvbby.stitch.decorator.PathDecorator;
 import com.lvbby.stitch.env.Env;
 import com.lvbby.stitch.env.PropertiesEnvironment;
 import com.lvbby.stitch.kv.KeyDecorator;
 import com.lvbby.stitch.kv.KvServiceCache;
 import com.lvbby.stitch.kv.impl.ZkKvService;
+import org.junit.Test;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -36,18 +38,57 @@ public class StitchClientProxy {
         });
     }
 
-    public void cookie() {
-        Env env = new PropertiesEnvironment("/data/config/app.properties");
+    public static StitchClient create(String... paths) {
+        return createWithEnv(mergePath(paths));
+    }
+
+    /***
+     * with env added inside
+     */
+    public static StitchClient createWithEnv(List<KeyDecorator> decorators) {
+        List<KeyDecorator> re = Lists.newArrayList();
+        re.add(new EnvDecorator(getEnv()));
+        re.addAll(decorators);
+        return create(re);
+    }
+
+    /***
+     * basic create method
+     */
+    public static StitchClient create(List<KeyDecorator> decorators) {
+        Env env = new PropertiesEnvironment("/data/config/env.properties");
 
         ZkKvService zk = new ZkKvService(env.getZkServer());
         KvServiceCache kvServiceCache = new KvServiceCache(zk);
         DefaultStitchClient defaultStitchClient = new DefaultStitchClient(kvServiceCache);
-        StitchClient proxy = proxy(Lists.newArrayList(
-                new RootDecorator("/stitch"),
-                new EnvDecorator(env)
-        ), defaultStitchClient);
-        System.out.println(proxy.get(""));
+        return proxy(decorators, defaultStitchClient);
+    }
 
+    public static Env getEnv() {
+        return new PropertiesEnvironment("/data/config/env.properties");
+    }
+
+    private static List<KeyDecorator> mergePath(String... paths) {
+        LinkedList<KeyDecorator> decorators = Lists.newLinkedList();
+        if (paths != null && paths.length > 0)
+            for (int i = paths.length - 1; i >= 0; i--) {
+                decorators.add(new PathDecorator(paths[i]));
+            }
+        return decorators;
+    }
+
+    @Test
+    public void cookie() {
+        StitchClient proxy = create("stitch", "app");
+
+        while (true) {
+            System.out.println(proxy.get("testkey"));
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

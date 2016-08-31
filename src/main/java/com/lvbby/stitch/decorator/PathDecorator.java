@@ -5,11 +5,12 @@ import com.lvbby.stitch.util.PathUtil;
 
 /**
  * Created by lipeng on 16/8/30.
+ * add path before the key
  */
-public class RootDecorator implements KeyDecorator {
+public class PathDecorator implements KeyDecorator {
     private String root;
 
-    public RootDecorator(String root) {
+    public PathDecorator(String root) {
         this.root = root;
     }
 
