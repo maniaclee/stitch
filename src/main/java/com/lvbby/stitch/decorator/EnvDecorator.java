@@ -1,6 +1,6 @@
 package com.lvbby.stitch.decorator;
 
-import com.lvbby.stitch.env.EnvironMent;
+import com.lvbby.stitch.env.Env;
 import com.lvbby.stitch.kv.KeyDecorator;
 import com.lvbby.stitch.util.PathUtil;
 
@@ -9,14 +9,14 @@ import com.lvbby.stitch.util.PathUtil;
  */
 public class EnvDecorator implements KeyDecorator {
 
-    private EnvironMent environMent;
+    private Env env;
 
-    public EnvDecorator(EnvironMent environMent) {
-        this.environMent = environMent;
+    public EnvDecorator(Env env) {
+        this.env = env;
     }
 
     @Override
     public String decorateKey(String key) {
-        return PathUtil.keyAndKey(key, environMent.getEnv());
+        return PathUtil.keyAndKey(key, env.getEnv());
     }
 }
