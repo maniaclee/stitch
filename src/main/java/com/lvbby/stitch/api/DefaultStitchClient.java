@@ -1,6 +1,6 @@
 package com.lvbby.stitch.api;
 
-import com.lvbby.stitch.kv.KvServiceCache;
+import com.lvbby.stitch.kv.KvService;
 
 import java.util.Optional;
 
@@ -10,15 +10,16 @@ import java.util.Optional;
  */
 public class DefaultStitchClient implements StitchClient {
 
-    private KvServiceCache kvServiceCache;
+    private KvService kvService;
 
-    public DefaultStitchClient(KvServiceCache kvServiceCache) {
-        this.kvServiceCache = kvServiceCache;
+    public DefaultStitchClient(KvService kvService) {
+        kvService.init();
+        this.kvService = kvService;
     }
 
     @Override
     public String get(String s, String defaultValue) {
-        return Optional.of(trimToNull(s)).map(v -> kvServiceCache.get(v)).orElse(defaultValue);
+        return Optional.of(trimToNull(s)).map(v -> kvService.get(v)).orElse(defaultValue);
     }
 
     @Override

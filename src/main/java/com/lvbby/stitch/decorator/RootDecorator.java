@@ -15,6 +15,6 @@ public class RootDecorator implements KeyDecorator {
 
     @Override
     public String decorateKey(String key) {
-        return PathUtil.rootAndKey(root, key);
+        return PathUtil.concatPath(root, key);
     }
 }

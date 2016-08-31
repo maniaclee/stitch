@@ -5,4 +5,7 @@ package com.lvbby.stitch.env;
  */
 public interface Env {
     String getEnv();
+
+    String getZkServer();
+
 }

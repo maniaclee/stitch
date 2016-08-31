@@ -1,6 +1,13 @@
 package com.lvbby.stitch.api;
 
+import com.google.common.collect.Lists;
+import com.lvbby.stitch.decorator.EnvDecorator;
+import com.lvbby.stitch.decorator.RootDecorator;
+import com.lvbby.stitch.env.Env;
+import com.lvbby.stitch.env.PropertiesEnvironment;
 import com.lvbby.stitch.kv.KeyDecorator;
+import com.lvbby.stitch.kv.KvServiceCache;
+import com.lvbby.stitch.kv.impl.ZkKvService;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -13,7 +20,7 @@ import java.util.List;
 public class StitchClientProxy {
 
 
-    public StitchClient proxy(List<KeyDecorator> keyDecorators, StitchClient stitchClient) {
+    public static StitchClient proxy(List<KeyDecorator> keyDecorators, StitchClient stitchClient) {
         return (StitchClient) Proxy.newProxyInstance(StitchClientProxy.class.getClassLoader(), new Class[]{StitchClient.class}, new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -27,6 +34,20 @@ public class StitchClientProxy {
                 return method.invoke(stitchClient, args);
             }
         });
+    }
+
+    public void cookie() {
+        Env env = new PropertiesEnvironment("/data/config/app.properties");
+
+        ZkKvService zk = new ZkKvService(env.getZkServer());
+        KvServiceCache kvServiceCache = new KvServiceCache(zk);
+        DefaultStitchClient defaultStitchClient = new DefaultStitchClient(kvServiceCache);
+        StitchClient proxy = proxy(Lists.newArrayList(
+                new RootDecorator("/stitch"),
+                new EnvDecorator(env)
+        ), defaultStitchClient);
+        System.out.println(proxy.get(""));
+
     }
 
 }
