@@ -23,7 +23,6 @@ public class KvServiceCache implements KvService {
 
     @Override
     public String get(String key) {
-        System.out.println(key);
         String s = cache.get(key);
         if (s == null) {
             s = kvService.get(key);
@@ -31,6 +30,11 @@ public class KvServiceCache implements KvService {
                 cache.put(key, s);
         }
         return s;
+    }
+
+    @Override
+    public void set(String key, String value) {
+        kvService.set(key, value);
     }
 
     @Override

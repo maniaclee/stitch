@@ -42,4 +42,9 @@ public class PropertyService extends AbstractKvService {
     public String get(String key) {
         return properties.getProperty(key);
     }
+
+    @Override
+    public void set(String key, String value) {
+        properties.setProperty(key, value);
+    }
 }

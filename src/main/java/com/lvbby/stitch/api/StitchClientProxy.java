@@ -9,9 +9,9 @@ import com.lvbby.stitch.kv.KeyDecorator;
 import com.lvbby.stitch.kv.KvService;
 import com.lvbby.stitch.kv.KvServiceCache;
 import com.lvbby.stitch.kv.impl.ZkKvService;
+import org.apache.commons.lang3.StringUtils;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,18 +26,18 @@ public class StitchClientProxy {
      * create StitchClient proxy
      */
     public static StitchClient proxy(List<KeyDecorator> keyDecorators, StitchClient stitchClient) {
-        return (StitchClient) Proxy.newProxyInstance(StitchClientProxy.class.getClassLoader(), new Class[]{StitchClient.class}, new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                if (method.getName().startsWith("get")) {
-                    String key = (String) args[0];
-                    for (KeyDecorator keyDecorator : keyDecorators) {
-                        key = keyDecorator.decorateKey(key);
-                    }
-                    args[0] = key;
-                }
+        return (StitchClient) Proxy.newProxyInstance(StitchClientProxy.class.getClassLoader(), new Class[]{StitchClient.class}, (proxy, method, args) -> {
+            /** intercept all public and non-static methods, first parameter is the key */
+            if (Modifier.isPublic(method.getModifiers()) && !Modifier.isStatic(method.getModifiers()))
                 return method.invoke(stitchClient, args);
+            if (args.length > 0 && args[0] instanceof String) {
+                String key = StringUtils.trimToNull((String) args[0]);
+                for (KeyDecorator keyDecorator : keyDecorators) {
+                    key = keyDecorator.decorateKey(key);
+                }
+                args[0] = key;
             }
+            return method.invoke(stitchClient, args);
         });
     }
 
@@ -79,7 +79,6 @@ public class StitchClientProxy {
             }
         return decorators;
     }
-
 
 
 }

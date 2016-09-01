@@ -1,6 +1,7 @@
 package com.lvbby.stitch.api;
 
 import com.lvbby.stitch.kv.KvService;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Optional;
 
@@ -45,6 +46,13 @@ public class DefaultStitchClient implements StitchClient {
     @Override
     public int getInt(String s, int defaultValue) {
         return Optional.of(get(s)).map(v -> Integer.parseInt(v.toLowerCase())).orElse(defaultValue);
+    }
+
+    @Override
+    public void set(String s, String value) {
+        value = StringUtils.trimToEmpty(value);
+        if (s != null)
+            kvService.set(s, value);
     }
 
     private String trimToNull(String s) {

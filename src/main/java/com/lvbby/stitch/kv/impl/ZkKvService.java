@@ -74,6 +74,14 @@ public class ZkKvService extends AbstractKvService implements KvService {
         return null;
     }
 
+    @Override
+    public void set(String key, String value) {
+        zookeeperDelegate.set(key, value);
+        keyValueMap.put(key, value);
+
+    }
+
+
     private void sync() {
         for (String key : keyValueMap.keySet()) {
             String newValue = get(key);

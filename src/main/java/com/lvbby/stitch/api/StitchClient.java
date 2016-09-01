@@ -15,4 +15,7 @@ public interface StitchClient {
     int getInt(String s);
 
     int getInt(String s, int defaultValue);
+
+    void set(String s, String value);
+
 }

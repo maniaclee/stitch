@@ -48,4 +48,13 @@ public class ZookeeperDelegate {
             return null;
         }
     }
+
+    public void set(String key, String value) {
+        try {
+            curatorClient.create().creatingParentsIfNeeded().forPath(key, value.getBytes());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

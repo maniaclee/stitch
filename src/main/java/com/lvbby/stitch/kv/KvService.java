@@ -8,4 +8,6 @@ public interface KvService extends ListenerSupport {
     void init();
 
     String get(String key);
+
+    void set(String key  , String value);
 }
