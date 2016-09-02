@@ -28,14 +28,14 @@ public class StitchClientProxy {
     public static StitchClient proxy(List<KeyDecorator> keyDecorators, StitchClient stitchClient) {
         return (StitchClient) Proxy.newProxyInstance(StitchClientProxy.class.getClassLoader(), new Class[]{StitchClient.class}, (proxy, method, args) -> {
             /** intercept all public and non-static methods, first parameter is the key */
-            if (Modifier.isPublic(method.getModifiers()) && !Modifier.isStatic(method.getModifiers()))
-                return method.invoke(stitchClient, args);
-            if (args.length > 0 && args[0] instanceof String) {
-                String key = StringUtils.trimToNull((String) args[0]);
-                for (KeyDecorator keyDecorator : keyDecorators) {
-                    key = keyDecorator.decorateKey(key);
+            if (Modifier.isPublic(method.getModifiers()) && !Modifier.isStatic(method.getModifiers())) {
+                if (args.length > 0 && args[0] instanceof String) {
+                    String key = StringUtils.trimToNull((String) args[0]);
+                    for (KeyDecorator keyDecorator : keyDecorators) {
+                        key = keyDecorator.decorateKey(key);
+                    }
+                    args[0] = key;
                 }
-                args[0] = key;
             }
             return method.invoke(stitchClient, args);
         });
@@ -43,6 +43,10 @@ public class StitchClientProxy {
 
     public static StitchClient create(String... paths) {
         return createWithEnv(mergePath(paths));
+    }
+
+    public static StitchClient createRaw(String... paths) {
+        return create(mergePath(paths));
     }
 
     /***
@@ -66,6 +70,7 @@ public class StitchClientProxy {
         StitchClient defaultStitchClient = new DefaultStitchClient(kvServiceCache);
         return proxy(decorators, defaultStitchClient);
     }
+
 
     public static Env getEnv() {
         return new PropertiesEnvironment("/data/config/env.properties");
