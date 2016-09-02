@@ -95,7 +95,7 @@ public class StitchClientBuilder {
     }
 
     public static StitchClient proxy(List<KeyDecorator> keyDecorators, StitchClient stitchClient) {
-        return (StitchClient) Proxy.newProxyInstance(StitchClientProxy.class.getClassLoader(), new Class[]{StitchClient.class}, (proxy, method, args) -> {
+        return (StitchClient) Proxy.newProxyInstance(StitchClientBuilder.class.getClassLoader(), new Class[]{StitchClient.class}, (proxy, method, args) -> {
             /** intercept all public and non-static methods, first parameter is the key */
             if (Modifier.isPublic(method.getModifiers()) && !Modifier.isStatic(method.getModifiers())) {
                 if (args.length > 0 && args[0] instanceof String) {

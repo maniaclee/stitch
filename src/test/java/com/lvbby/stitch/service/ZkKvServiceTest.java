@@ -42,9 +42,23 @@ public class ZkKvServiceTest {
     }
 
     @Test
+    public void builder() {
+        StitchClient proxy = StitchClientBuilder.withPath("config", "labrador")
+                .fromEnv()
+                .decorateKeyWithEnv()
+                .build();
+
+        System.out.println(proxy.get("hostUrl"));
+    }
+
+    @Test
     public void store() throws IOException {
-        StitchClient proxy = StitchClientBuilder.withPath("config", "labrador").zkServer("localhost:2181").build();
-        StitchTool.of(proxy).store("/Users/peng/workspace/github/stitch/src/test/resources/a.properties");
+        StitchClient proxy = StitchClientBuilder
+                .withPath("config", "labrador")
+                .zkServer("localhost:2181").build();
+        StitchTool
+                .of(proxy)
+                .store("/Users/peng/workspace/github/stitch/src/test/resources/a.properties");
     }
 
 }

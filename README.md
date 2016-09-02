@@ -44,10 +44,17 @@ env = online
 ##### 使用
 
 ```java
-StitchClient proxy = StitchClientProxy.create("root", "app");//root为根路径，app为应用名称
+StitchClient proxy = StitchClientBuilder.defaultClient("root", "app");//root为根路径，app为应用名称
 System.out.println(proxy.get("testkey")); //读取相应的配置项
 ```
-
+使用builder
+```java
+StitchClient proxy = StitchClientBuilder.withPath("config", "labrador")
+                .fromEnv()
+                .decorateKeyWithEnv()
+                .build();
+System.out.println(proxy.get("hostUrl"));
+```
 ### 扩展
 
 ```java
@@ -56,7 +63,7 @@ Env env = new PropertiesEnvironment("/data/config/env.properties");//获取环�
 KvService zk = new ZkKvService(env.getZkServer()); //使用zookeeper
 KvService kvServiceCache = new KvServiceCache(zk); //缓存代理，推荐
 StitchClient defaultStitchClient = new DefaultStitchClient(kvServiceCache);//创建api client
-StitchClient proxy =  StitchClientProxy.proxy(decorators, defaultStitchClient);//可传入List<KeyDecorator>生成代理来对key进行定制化
+StitchClient proxy =  StitchClientBuilder.proxy(decorators, defaultStitchClient);//可传入List<KeyDecorator>生成代理来对key进行定制化
 ```
 
 **扩展接口KeyDecorator**
@@ -76,3 +83,15 @@ PathDecorator				- 将路径加在key前面，作为zookeeper的路径，嵌套�
 PrefixKeyDecorator			- 增加前缀
 
 SuffixKeyDecorator			- 增加后缀
+
+###工具
+将properties导入到zookeeper
+
+```java
+StitchClient proxy = StitchClientBuilder
+                .withPath("config", "labrador")
+                .zkServer("localhost:2181").build();
+        StitchTool
+                .of(proxy)
+                .store("properties absolute path");
+```
